@@ -33,7 +33,7 @@ This is a advanced, web-based calculator project designed for students and enthu
 * [Caddy Server](https://caddyserver.com/) installed on your machine.
 
 ### Local Installation
-Download the index.html, main.js, global.css, caddy.exe and run.bat. Use the calculator in your web browser. Launch it via "run.bat"
+Download the index.html, main.js, global.css, wokrer.js and run.bat. Use the calculator in your web browser. Launch it via "run.bat"
 
 ## 🛡 License
 This project is for personal use and study purposes.
