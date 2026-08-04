@@ -8,7 +8,6 @@ This is a advanced, web-based calculator project designed for students and enthu
 
 ## 🛠 Tech Stack
 * **Frontend:** HTML5, CSS3 (Glassmorphism), JavaScript (ES6+)
-* **Math Engine:** [Desmos Graphing Calculator API](https://www.desmos.com/api)
 * **Concurrency:** Web Workers (for background processing)
 * **Server:** Caddy Web Server
 
@@ -23,7 +22,6 @@ This is a advanced, web-based calculator project designed for students and enthu
 ├── js/
 │   ├── main.js          # App initialization & UI logic
 │   ├── worker.js        # Background mathematical computations
-│   └── desmos-init.js   # Desmos API wrapper & configuration
 └── assets/              # Icons and images
 ```
 
@@ -33,8 +31,7 @@ This is a advanced, web-based calculator project designed for students and enthu
 * [Caddy Server](https://caddyserver.com/) installed on your machine.
 
 ### Local Installation
-Download the index.html, main.js, global.css, wokrer.js and run.bat. Use the calculator in your web browser. Launch it via "run.bat"
+Download the index.html, run.bat and all the .css and .js files. Use the calculator in your web browser. Launch it via "run.bat"
 
 ## 🛡 License
 This project is for personal use and study purposes.
-The Desmos API is subject to [Desmos Terms of Service](https://www.desmos.com/api-terms).
