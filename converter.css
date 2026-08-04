@@ -1,0 +1,143 @@
+/* ── Unit Converter Panel Styles ── */
+#unit-converter-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 286px;
+    margin: 0 auto;
+    gap: 14px;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 0 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#unit-converter-panel::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Header ── */
+.unit-converter-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 8px 8px;
+    flex-shrink: 0;
+}
+
+.unit-back-btn {
+    background: none;
+    border: none;
+    color: var(--text-main, #ffffff);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background 0.15s, color 0.15s, transform 0.1s;
+}
+
+.unit-back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.unit-back-btn:active {
+    transform: scale(0.92);
+}
+
+.unit-converter-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-main, #ffffff);
+    letter-spacing: 0.01em;
+}
+
+/* ── Grid Container ── */
+.unit-converter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ── Unit Category Button ── */
+.unit-converter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 18px 10px 14px;
+    min-height: 104px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background-color 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.15s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+}
+
+.unit-converter-btn:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.unit-converter-btn:active {
+    transform: scale(0.95) translateY(2px);
+    background: rgba(255, 140, 0, 0.12);
+    border-color: rgba(255, 140, 0, 0.35);
+}
+
+.unit-converter-btn.active {
+    background: rgba(255, 140, 0, 0.15);
+    border-color: rgba(255, 140, 0, 0.5);
+}
+
+/* Icon Wrapper */
+.unit-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-main, #ffffff);
+    font-size: 1.6rem;
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.unit-converter-btn:hover .unit-btn-icon {
+    transform: scale(1.05);
+}
+
+/* Label */
+.unit-btn-label {
+    font-size: 0.76rem;
+    font-weight: 400;
+    color: #e0e0e0;
+    text-align: center;
+    line-height: 1.25;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+}
+
+.unit-converter-btn:hover .unit-btn-label {
+    color: #ffffff;
+}
+
+.unit-converter-btn:active .unit-btn-label {
+    color: #ff8c00;
+}
