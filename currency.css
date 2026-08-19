@@ -1,0 +1,579 @@
+/* ── Currency Calculator Panel Styles ── */
+#currency-calc-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    width: 286px;
+    margin: 0 auto;
+    gap: 10px;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    padding-bottom: 4px;
+}
+
+/* Display Section */
+.currency-display {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.currency-display-inputs {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.currency-inputs-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.currency-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.currency-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.currency-card.active {
+    background: rgba(255, 140, 0, 0.08);
+    border-color: rgba(255, 140, 0, 0.35);
+}
+
+.currency-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+.currency-card .currency-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.currency-card .dropdown-arrow {
+    font-size: 1.1rem;
+    opacity: 0.7;
+    transition: transform 0.2s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.currency-card:hover .dropdown-arrow {
+    opacity: 1;
+}
+
+.currency-card .card-value {
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+.currency-card.active .card-value {
+    color: #ff8c00;
+}
+
+/* Swap Card Button */
+.currency-swap-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+}
+
+.currency-swap-btn:hover {
+    color: var(--text-main);
+}
+
+.currency-swap-btn:active {
+    transform: scale(0.94);
+    background: rgba(255, 140, 0, 0.15);
+    color: #ff8c00;
+}
+
+/* Update Status Bar */
+.currency-update-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    padding: 0 4px;
+}
+
+.currency-refresh-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: 50%;
+    transition: color 0.2s, transform 0.3s ease;
+}
+
+.currency-refresh-btn:hover {
+    color: var(--text-main);
+}
+
+.currency-refresh-btn:active {
+    transform: rotate(180deg);
+}
+
+/* Keypad Grid Layout */
+#currency-calc-panel .currency-keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px 10px;
+    flex: 1;
+    min-height: 0;
+    margin-top: 2px;
+}
+
+#currency-calc-panel .currency-keypad .currency-btn:not(.btn-action) {
+    width: min(70px, 18.75vw, 10vh);
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid hsla(0, 0%, 100%, 0.18);
+    background: linear-gradient(160deg,
+            hsla(0, 0%, 100%, 0.12) 0%,
+            hsla(0, 0%, 100%, 0.04) 50%,
+            hsla(0, 0%, 100%, 0.08) 100%);
+    color: hsla(0, 0%, 100%, 0.95);
+    font-size: 1.35rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    touch-action: manipulation;
+    will-change: box-shadow;
+    transform: translateZ(0);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+        var(--prox-glow, inset 0 0 0 transparent, inset 0 0 0 transparent),
+        inset 0 0 0 transparent,
+        inset 0px 1.5px 2px hsla(0, 0%, 100%, 0.3),
+        inset 0px -2px 4px hsla(0, 0%, 0%, 0.35),
+        0px 4px 12px hsla(0, 0%, 0%, 0.35);
+    transition: transform 0.1s, box-shadow 1.2s ease-out;
+    user-select: none;
+}
+
+#currency-calc-panel .currency-keypad .currency-btn:not(.btn-action):active,
+#currency-calc-panel .currency-keypad .currency-btn:not(.btn-action).tapped {
+    transform: translateY(2px) scale(0.98);
+    box-shadow:
+        var(--prox-glow, inset 0 0 0 transparent, inset 0 0 0 transparent),
+        inset 0 0 18px 6px rgba(255, 255, 255, 0.3),
+        inset 0px 1.5px 2px hsla(0, 0%, 100%, 0.3),
+        inset 0px -2px 4px hsla(0, 0%, 0%, 0.35),
+        0px 4px 12px hsla(0, 0%, 0%, 0.35);
+}
+
+/* Action vertical spanning buttons */
+#currency-calc-panel .currency-keypad .btn-action {
+    border-radius: 99999999px;
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+#currency-calc-panel .currency-keypad .btn-ac {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+    background: linear-gradient(145deg, #ff4d4d, #b22222);
+    color: white;
+    border: none;
+    --glow-color: var(--red-glow);
+    will-change: box-shadow;
+    transform: translateZ(0);
+    box-shadow: var(--prox-glow, inset 0 0 0 transparent, inset 0 0 0 transparent), 0px 5px 14px hsla(0, 0%, 0%, 0.35);
+    transition: transform 0.1s, box-shadow 1.2s ease-out;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+#currency-calc-panel .currency-keypad .btn-ac:active,
+#currency-calc-panel .currency-keypad .btn-ac.tapped {
+    transform: translateY(2px) scale(0.98);
+    box-shadow:
+        var(--prox-glow, inset 0 0 0 transparent, inset 0 0 0 transparent),
+        inset 0px 1px 3px hsla(0, 100%, 75%, 0.8),
+        inset 0px -3px 6px hsla(0, 0%, 0%, 0.4),
+        0px 2px 5px hsla(0, 0%, 0%, 0.35);
+}
+
+#currency-calc-panel .currency-keypad .btn-backspace {
+    grid-column: 4;
+    grid-row: 3 / span 2;
+    color: #ff4d4d;
+    --glow-color: var(--red-glow);
+    background: linear-gradient(160deg,
+            hsla(0, 0%, 100%, 0.12) 0%,
+            hsla(0, 0%, 100%, 0.04) 50%,
+            hsla(0, 0%, 100%, 0.08) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: none;
+    will-change: box-shadow;
+    transform: translateZ(0);
+    box-shadow:
+        var(--prox-glow, inset 0 0 0 transparent, inset 0 0 0 transparent),
+        inset 0 0 0 transparent,
+        inset 0px 2px 4px rgba(255, 77, 77, 0.2),
+        inset 0px -3px 6px hsla(0, 0%, 0%, 0.3),
+        0px 5px 14px hsla(0, 0%, 0%, 0.35);
+    transition: transform 0.1s, box-shadow 1.2s ease-out;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+#currency-calc-panel .currency-keypad .btn-backspace:active,
+#currency-calc-panel .currency-keypad .btn-backspace.tapped {
+    transform: translateY(2px) scale(0.98);
+    box-shadow:
+        var(--prox-glow, inset 0 0 0 transparent, inset 0 0 0 transparent),
+        inset 0 0 10px 2px rgba(255, 77, 77, 0.25),
+        inset 0px 2px 4px rgba(255, 77, 77, 0.15),
+        inset 0px -3px 6px hsla(0, 0%, 0%, 0.4),
+        0px 5px 14px hsla(0, 0%, 0%, 0.35);
+}
+
+/* Currency Picker Modal */
+.currency-picker-modal {
+    position: absolute;
+    inset: 0;
+    z-index: 100000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    padding: 12px;
+}
+
+.currency-picker-modal.show {
+    display: flex;
+}
+
+/* Match history panel aesthetic exactly */
+.currency-picker-card {
+    background: rgba(27, 27, 29, 0.5);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: none;
+    width: 100%;
+    max-height: 60%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.currency-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 14px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    flex-shrink: 0;
+}
+
+.currency-picker-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.15s;
+}
+
+.currency-picker-close:hover {
+    color: #fff;
+}
+
+.currency-picker-search {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+}
+
+.currency-picker-search input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 6px 10px;
+    color: #e0e0e0;
+    font-size: 0.82rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.currency-picker-search input:focus {
+    border-color: rgba(255, 140, 0, 0.4);
+}
+
+.currency-picker-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+    scrollbar-width: none;
+}
+
+.currency-picker-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* Section headers (TOP CURRENCIES / ALL CURRENCIES) */
+.currency-picker-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 140, 0, 0.9);
+    padding: 10px 14px 6px;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    background: #1c1c1e;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 10;
+}
+
+/* ── Unified Currency List Item ── */
+.currency-list-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.currency-picker-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    min-width: 0;
+}
+
+.currency-picker-item:hover {
+    background: rgba(255, 140, 0, 0.12);
+}
+
+.currency-picker-item.selected {
+    background: rgba(255, 140, 0, 0.08);
+}
+
+.currency-picker-item .item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.currency-picker-item .item-country {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: #e0e0e0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+.currency-picker-item.selected .item-country {
+    color: #ff8c00;
+}
+
+.currency-picker-item .item-country-wrapper {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.currency-picker-item .item-country-wrapper.marquee {
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    text-overflow: clip;
+}
+
+.currency-picker-item .marquee-content {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: marquee-scroll 22s linear infinite;
+    will-change: transform;
+}
+
+.currency-picker-item:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.currency-picker-item .item-name {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.currency-picker-item .item-code-badge {
+    font-size: 0.73rem;
+    font-weight: 700;
+    color: rgba(255, 140, 0, 0.9);
+    background: rgba(255, 140, 0, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 140, 0, 0.18);
+    flex-shrink: 0;
+    width: 48px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.currency-picker-item.selected .item-code-badge {
+    background: rgba(255, 140, 0, 0.2);
+    border-color: rgba(255, 140, 0, 0.4);
+}
+
+.currency-picker-empty {
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+}
+
+/* ── Right-side badge wrapper (warning + code) ── */
+.currency-picker-item .item-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+/* ── Non-tradable warning badge ── */
+.currency-picker-item .item-non-tradable-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(220, 60, 60, 0.9);
+    font-size: 0.78rem;
+    cursor: help;
+    transition: color 0.15s;
+}
+
+.currency-picker-item .item-non-tradable-badge:hover {
+    color: rgba(255, 80, 80, 1);
+}
+
+/* ── Non-tradable row tint ── */
+.currency-picker-item.non-tradable {
+    border-left: 2px solid rgba(255, 200, 0, 0.3);
+    padding-left: 12px;
+}
+
+.currency-picker-item.non-tradable:hover {
+    background: rgba(255, 200, 0, 0.07);
+    border-left-color: rgba(255, 200, 0, 0.55);
+}
+
+.currency-picker-item.non-tradable.selected {
+    background: rgba(255, 200, 0, 0.1);
+    border-left-color: rgba(255, 200, 0, 0.7);
+}
+
+/* ── Warning icon shown in the currency name bar ── */
+.currency-bar-warning-icon {
+    color: rgba(220, 60, 60, 0.9);
+    font-size: 1em;
+    margin-left: 3px;
+    vertical-align: middle;
+    cursor: help;
+    transition: color 0.15s;
+}
+
+.currency-bar-warning-icon:hover {
+    color: rgba(255, 80, 80, 1);
+}
