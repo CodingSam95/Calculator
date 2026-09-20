@@ -1,0 +1,501 @@
+/* == Function Plot Full-Screen Graphing Panel Styles == */
+
+#graphing-panel {
+    display: none;
+    /* Fixed so it escapes .calculator's 20px padding and fills the screen */
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Match the exact width of the 4-column standard button panel:
+       4 buttons × min(70px, 18.75vw, 10vh) + 3 gaps × 10px */
+    width: calc(4 * min(70px, 18.75vw, 10vh) + 30px);
+    height: 100dvh;
+    z-index: 10;
+    overflow: hidden !important;   /* clips L/R canvas bleed */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 1:1 Square Plot Canvas (Height matches parent, width matches height, centered) */
+.graph-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* Perfect 1:1 square — same side length as the device height.
+       The panel clips whatever bleeds past the 9/16 visible width. */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100dvh;
+    height: 100dvh;
+    z-index: 1;
+    background: transparent !important;
+    overflow: hidden !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.graph-canvas svg.function-plot,
+.graph-canvas svg {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    clip-path: inset(0) !important; /* Clip SVG graphics strictly to viewport */
+}
+
+/* Floating Semi-Transparent Equations Overlay (Bottom Section) */
+.graph-equations-section {
+    position: absolute;
+    bottom: 20px;
+    left: 12px;
+    right: 12px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(18, 20, 26, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 10px 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    /* Slide transition */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.graph-equations-section.collapsed {
+    transform: translateY(calc(100% + 30px));
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Header row containing the collapse button */
+.graph-eq-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 2px;
+}
+
+.graph-collapse-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 10px;
+    line-height: 1;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.graph-collapse-btn:hover {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Floating expand button — visible only when equations panel is hidden */
+.graph-expand-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 16px;
+    z-index: 6;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(18, 20, 26, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.graph-expand-btn:hover {
+    background: rgba(32, 227, 178, 0.2);
+    color: #20e3b2;
+    transform: scale(1.08);
+}
+
+.graph-expand-btn.visible {
+    display: flex;
+}
+
+.graph-inputs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.graph-inputs-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.graph-inputs-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+/* Single-Line Equation Row */
+.func-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.func-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Flat Color Dot - NO GLOW */
+.func-color-badge {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: none !important;
+}
+
+.func-eq-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* KaTeX LaTeX Display */
+.func-latex-preview {
+    font-size: 15px;
+    color: #ffffff;
+    overflow-x: auto;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.func-latex-preview .katex {
+    font-size: 1.05em;
+    color: #ffffff;
+}
+
+/* Inline Input (shown when editing) */
+.func-input-inline {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #20e3b2;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    display: none;
+}
+
+.func-delete-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 4px;
+    line-height: 1;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.func-delete-btn:hover {
+    color: #ff4757;
+}
+
+.graph-add-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(32, 227, 178, 0.3);
+    color: #20e3b2;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+
+.graph-add-btn:hover {
+    background: rgba(32, 227, 178, 0.12);
+    border-color: rgba(32, 227, 178, 0.5);
+}
+
+/* SVG styling overrides for transparent dark mode function-plot */
+.function-plot {
+    font-family: 'Inter', sans-serif !important;
+    background: transparent !important;
+}
+
+.function-plot .canvas {
+    fill: transparent !important;
+    background: transparent !important;
+}
+
+/* Hide ONLY the outer domain border path line */
+.function-plot .axis > path.domain,
+.function-plot .axis > path {
+    stroke: none !important;
+    fill: none !important;
+}
+
+/* Ensure mouse zoom & drag container remains fully active */
+.function-plot rect.zoom-and-drag {
+    display: block !important;
+    fill: none !important;
+    pointer-events: all !important;
+}
+
+/* Axis tick marks */
+.function-plot .axis .tick line {
+    stroke: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Clean, crisp, crystal-clear axis tick text numbers */
+.function-plot text {
+    fill: rgba(255, 255, 255, 0.95) !important;
+    font-size: 11px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    stroke: none !important;
+}
+
+.function-plot .x.axis .tick text {
+    text-anchor: middle !important;
+    fill: rgba(255, 255, 255, 0.95) !important;
+}
+
+.function-plot .y.axis .tick text {
+    fill: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Central main origin axes - Completely White */
+.function-plot .origin {
+    stroke: #ffffff !important;
+    stroke-width: 2px !important;
+    display: block !important;
+}
+
+/* Grid lines and smaller inner sub-grid lines */
+.function-plot .grid .tick line {
+    stroke: rgba(255, 255, 255, 0.22) !important;
+    stroke-dasharray: 2, 2 !important;
+}
+
+.function-plot .grid .tick.minor line,
+.function-plot .axis .tick.minor line {
+    stroke: rgba(255, 255, 255, 0.1) !important;
+    stroke-dasharray: 1, 2 !important;
+}
+
+.function-plot .top-right-legend {
+    fill: rgba(255, 255, 255, 0.8) !important;
+}
+
+.function-plot .tip {
+    border-radius: 8px;
+    padding: 4px 8px;
+    background: rgba(20, 22, 30, 0.9) !important;
+    color: #fff !important;
+    font-size: 11px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ══════════════════════════════════════════
+   Custom Math Keyboard
+══════════════════════════════════════════ */
+.math-keyboard {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: rgba(14, 16, 22, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px 20px 0 0;
+    padding: 0 0 env(safe-area-inset-bottom, 8px);
+    /* Hidden state — slid off the bottom */
+    transform: translateY(100%);
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.math-keyboard.open {
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+/* ── Header: equation display + Done ── */
+.mkb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    gap: 10px;
+}
+
+.mkb-input-display {
+    flex: 1;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    letter-spacing: 0.02em;
+}
+
+.mkb-input-display::-webkit-scrollbar { display: none; }
+
+.mkb-done-btn {
+    background: rgba(32, 227, 178, 0.15);
+    border: 1px solid rgba(32, 227, 178, 0.35);
+    border-radius: 10px;
+    color: #20e3b2;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.mkb-done-btn:hover { background: rgba(32, 227, 178, 0.28); }
+
+/* ── Tabs ── */
+.mkb-tabs {
+    display: flex;
+    gap: 0;
+    padding: 6px 14px 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.mkb-tab {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 16px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.mkb-tab.active {
+    color: #20e3b2;
+    border-bottom-color: #20e3b2;
+}
+
+/* ── Key panels ── */
+.mkb-panel {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px 10px 4px;
+}
+
+.mkb-panel.active { display: flex; }
+
+.mkb-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+/* ── Individual Keys ── */
+.mkb-key {
+    flex: 1;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.06);
+    color: #e8e8e8;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.12s, transform 0.08s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mkb-key:active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(0.93);
+}
+
+/* Function keys — slightly tinted */
+.mkb-key.mkb-fn {
+    background: rgba(32, 227, 178, 0.08);
+    border-color: rgba(32, 227, 178, 0.15);
+    color: #20e3b2;
+    font-size: 12px;
+}
+
+.mkb-key.mkb-fn:active {
+    background: rgba(32, 227, 178, 0.22);
+}
+
+/* Operator keys */
+.mkb-key.mkb-op {
+    background: rgba(161, 116, 255, 0.1);
+    border-color: rgba(161, 116, 255, 0.2);
+    color: #c4a0ff;
+}
+
+.mkb-key.mkb-op:active {
+    background: rgba(161, 116, 255, 0.25);
+}
+
+/* Backspace key */
+.mkb-key.mkb-del {
+    background: rgba(255, 71, 87, 0.1);
+    border-color: rgba(255, 71, 87, 0.2);
+    color: #ff6b6b;
+    font-size: 18px;
+}
+
+.mkb-key.mkb-del:active {
+    background: rgba(255, 71, 87, 0.25);
+}
